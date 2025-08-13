@@ -33,13 +33,11 @@ cd dotnetapp
 dotnet new web -o EnvDotNetApp
 cd EnvDotNetApp
 ----------------------
+sudo apt update -y
+sudo apt install git -y
 
-sudo yum install git -y 
-
-
-git clone https://github.com/yourusername/yourrepo.git
-cd yourrepo
-
+git clone https://github.com/Mythreyee26/tasks.git
+cd tasks
 ----------------------
 
 
