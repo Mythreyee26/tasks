@@ -1,0 +1,56 @@
+# Update and install prerequisites
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+
+# Install Docker (official repo)
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+
+# Install Docker packages
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io
+
+# Enable and start Docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+
+# Verify Docker
+sudo docker --version
+# Install .NET SDK 7.0 (or latest)
+wget https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+rm packages-microsoft-prod.deb
+sudo apt update
+sudo apt install -y dotnet-sdk-7.0
+# Verify .NET installed
+dotnet --version
+
+----------------------
+
+mkdir dotnetapp
+cd dotnetapp
+dotnet new web -o EnvDotNetApp
+cd EnvDotNetApp
+----------------------
+
+sudo yum install git -y 
+
+
+git clone https://github.com/yourusername/yourrepo.git
+cd yourrepo
+
+----------------------
+
+
+DOCKER COMMANDS:
+sudo docker build -t env-dotnet-app .
+sudo docker run -d -p 80:80 -e MESSAGE="Hello from .NET Docker on EC2" -e FLAG="True" env-dotnet-app
+
+-p 80:80 exposes container port 80 to EC2 port 80.
+-e passes environment variables into container.
+
+http://<your-ec2-public-ip>/
+.NET Core Environment Variables
+MESSAGE: Hello from .NET Docker on EC2
+FLAG: True
